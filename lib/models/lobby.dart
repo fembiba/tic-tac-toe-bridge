@@ -3,7 +3,7 @@ import 'package:tic_tac_toe_bridge/tic_tac_toe_bridge.dart';
 class Lobby {
   final LobbyState state;
 
-  final List<Identifier> players;
+  final Set<Identifier> players;
 
   const Lobby({
     required this.state,
@@ -14,7 +14,7 @@ class Lobby {
         state: LobbyState.json(json['state']),
         players: (json['players'] as List<dynamic>)
             .map((e) => Identifier(e as String))
-            .toList(),
+            .toSet(),
       );
 
   @override
