@@ -5,7 +5,7 @@ import 'package:tic_tac_toe_bridge/exceptions/exceptions.dart';
 import 'package:tic_tac_toe_bridge/factories/factories.dart';
 
 class ExceptionService {
-  HashSet<ExceptionFactory> _factories = HashSet();
+  final HashSet<ExceptionFactory> _factories = HashSet();
 
   final ExceptionFactory _factory;
 

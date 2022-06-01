@@ -17,12 +17,11 @@ class Context {
       : _secret = secret,
         _client = Dio() {
     _client.interceptors
-      ..add(QueuedInterceptorsWrapper(onRequest: (options, handler) {
-        if (isAuth) {
-          options.headers["Authorization"] =
-              "Bearer $_token-${_secret(_token!)}";
-        }
-      }));
+        .add(QueuedInterceptorsWrapper(onRequest: (options, handler) {
+      if (isAuth) {
+        options.headers["Authorization"] = "Bearer $_token-${_secret(_token!)}";
+      }
+    }));
 
     _client.transformer = DefaultTransformer(jsonDecodeCallback: decoder);
   }
