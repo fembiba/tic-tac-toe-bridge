@@ -1,5 +1,5 @@
 import 'package:tic_tac_toe_bridge/exceptions/base.dart';
-import 'package:dio/src/dio_error.dart';
+import 'package:dio/dio.dart';
 import 'package:tic_tac_toe_bridge/exceptions/server.dart';
 import 'package:tic_tac_toe_bridge/factories/base.dart';
 
