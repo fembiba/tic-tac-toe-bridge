@@ -7,17 +7,25 @@ class LobbyController extends Controller {
   const LobbyController.of(super.context) : super.of();
 
   @auth
-  Future<Lobby> information({bool polling = false}) {
-    throw UnimplementedError();
+  Future<Lobby> read({bool wait = false}) async {
+    var result = await context.httpClient.get('/lobby', queryParameters: {
+      'polling': wait,
+    });
+
+    return Lobby.json(result.data);
   }
 
   @auth
-  Future<Lobby> search(GameMode gameMode, {bool polling = true}) {
-    throw UnimplementedError();
+  Future<Lobby> search(String gameMode, {bool wait = true}) async {
+    var result = await context.httpClient.post('/lobby/search', data: {
+      'polling': wait,
+    });
+
+    return Lobby.json(result.data);
   }
 
   @auth
-  Future leave() {
-    throw UnimplementedError();
+  Future leave() async {
+    await context.httpClient.get('/lobby/leave');
   }
 }
