@@ -1,43 +1,44 @@
+import 'package:tic_tac_toe_bridge/models/game.dart';
 import 'package:tic_tac_toe_bridge/models/identifier.dart';
 import 'package:tic_tac_toe_bridge/models/board.dart';
 
-abstract class GameState {
-  const GameState();
+abstract class LobbyState {
+  const LobbyState();
 
-  factory GameState.json(dynamic json) {
+  factory LobbyState.json(dynamic json) {
     var type = (json['type'] as String).toLowerCase();
     var state = json['state'];
 
     switch (type) {
       case 'prepare':
-        return GamePreparingState.json(state);
+        return LobbyPreparingState.json(state);
       case 'playing':
-        return GamePlayingState.json(state);
+        return LobbyPlayingState.json(state);
       case 'finished':
-        return GameFinishedState.json(state);
+        return LobbyFinishedState.json(state);
       case 'canceled':
-        return GameCanceledState.json(state);
+        return LobbyCanceledState.json(state);
       default:
         throw FormatException(type);
     }
   }
 
-  static dynamic toJson(GameState state) {
+  static dynamic toJson(LobbyState state) {
     dynamic stateD = state;
 
     return stateD.toJson();
   }
 }
 
-abstract class GameEndedState extends GameState {
-  const GameEndedState();
+abstract class LobbyEndedState extends LobbyState {
+  const LobbyEndedState();
 }
 
-class GamePreparingState extends GameState {
-  const GamePreparingState();
+class LobbyPreparingState extends LobbyState {
+  const LobbyPreparingState();
 
-  factory GamePreparingState.json(dynamic json) {
-    return GamePreparingState();
+  factory LobbyPreparingState.json(dynamic json) {
+    return LobbyPreparingState();
   }
 
   Map<String, dynamic> toJson() => {
@@ -45,35 +46,24 @@ class GamePreparingState extends GameState {
       };
 }
 
-class GamePlayingState extends GameState {
-  final Board board;
+class LobbyPlayingState extends LobbyState {
+  final List<Game> games;
 
-  final List<Identifier> walkers;
-
-  final DateTime? next;
-
-  const GamePlayingState({
-    required this.board,
-    required this.walkers,
-    this.next,
+  const LobbyPlayingState({
+    required this.games,
   });
 
-  factory GamePlayingState.json(dynamic json) {
-    return GamePlayingState(
-      board: Board.json(json['board']),
-      walkers: (json['walkers'] as List<dynamic>)
-          .map((e) => Identifier(e as String))
-          .toList(),
-      next: json['next'] != null ? DateTime.parse(json['next']) : null,
+  factory LobbyPlayingState.json(dynamic json) {
+    return LobbyPlayingState(
+      games: (json['games'] as List<dynamic>).map((e) => Game.json(e)).toList(),
     );
   }
 
   Map<String, dynamic> toJson() => {
         'type': 'playing',
         'state': {
-          'winners': walkers.map((e) => e.toString()).toList(),
+          'games': games.map((e) => e.toString()).toList(),
         },
-        'next': next?.toIso8601String(),
       };
 
   @override
@@ -81,23 +71,21 @@ class GamePlayingState extends GameState {
 
   @override
   bool operator ==(Object other) =>
-      other is GamePlayingState &&
-      other.walkers == walkers &&
-      other.board == board;
+      other is LobbyPlayingState && other.games == games;
 
   @override
-  int get hashCode => Object.hash(walkers, next, board);
+  int get hashCode => games.hashCode;
 }
 
-class GameFinishedState extends GameEndedState {
+class LobbyFinishedState extends LobbyEndedState {
   final List<Identifier> winners;
 
-  const GameFinishedState({
+  const LobbyFinishedState({
     required this.winners,
   });
 
-  factory GameFinishedState.json(dynamic json) {
-    return GameFinishedState(
+  factory LobbyFinishedState.json(dynamic json) {
+    return LobbyFinishedState(
       winners: (json['winners'] as List<dynamic>)
           .map((e) => Identifier(e as String))
           .toList(),
@@ -116,21 +104,21 @@ class GameFinishedState extends GameEndedState {
 
   @override
   bool operator ==(Object other) =>
-      other is GameFinishedState && other.winners == winners;
+      other is LobbyFinishedState && other.winners == winners;
 
   @override
   int get hashCode => winners.hashCode;
 }
 
-class GameCanceledState extends GameEndedState {
+class LobbyCanceledState extends LobbyEndedState {
   final List<Identifier> guilties;
 
-  const GameCanceledState({
+  const LobbyCanceledState({
     required this.guilties,
   });
 
-  factory GameCanceledState.json(dynamic json) {
-    return GameCanceledState(
+  factory LobbyCanceledState.json(dynamic json) {
+    return LobbyCanceledState(
       guilties: (json['guilties'] as List<dynamic>)
           .map((e) => Identifier(e as String))
           .toList(),
@@ -149,7 +137,7 @@ class GameCanceledState extends GameEndedState {
 
   @override
   bool operator ==(Object other) =>
-      other is GameCanceledState && other.guilties == guilties;
+      other is LobbyCanceledState && other.guilties == guilties;
 
   @override
   int get hashCode => guilties.hashCode;

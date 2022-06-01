@@ -1,29 +1,78 @@
-import 'package:dio/dio.dart';
+import 'dart:convert';
 
-typedef ContextSecretProvider = String Function(String token);
+import 'package:crypto/crypto.dart';
+import 'package:dio/dio.dart';
+import 'package:tic_tac_toe_bridge/tic_tac_toe_bridge.dart';
+
+typedef SecretProviderCallback = String Function(String token);
 
 class Context {
-  final Dio _client;
-
   String? _token;
 
-  ContextSecretProvider _secret;
+  final Dio httpClient;
 
-  Object get client => _client;
+  final ExceptionService exceptionService;
 
-  bool get isAuth => _token != null;
+  final String authority;
 
-  Context(JsonDecodeCallback decoder, ContextSecretProvider secret)
-      : _secret = secret,
-        _client = Dio() {
-    _client.interceptors
-        .add(QueuedInterceptorsWrapper(onRequest: (options, handler) {
-      if (isAuth) {
-        options.headers["Authorization"] = "Bearer $_token-${_secret(_token!)}";
-      }
-    }));
+  final SecretProviderCallback secretProvider;
 
-    _client.transformer = DefaultTransformer(jsonDecodeCallback: decoder);
+  final JsonDecodeCallback jsonProvider;
+
+  String? get token => _token;
+
+  bool get authorized => _token != null;
+
+  Context.build({
+    this.authority = 'api.ttt.flx.team',
+    JsonDecodeCallback? jsonProvider,
+    SecretProviderCallback? secretProvider,
+  })  : exceptionService = ExceptionService(InternalExceptionFactory()),
+        httpClient = Dio(),
+        jsonProvider = jsonProvider ?? defaultJsonProviderBuilder(),
+        secretProvider = secretProvider ?? defaultSecretProviderBuilder() {
+    _initBaseUrl();
+    _initTransformer();
+    _initAuthInterceptor();
+    _initExceptionFactories();
+  }
+
+  void _initExceptionFactories() {
+    exceptionService.register(IntervalExceptionFactory());
+    exceptionService.register(ValidationExceptionFactory());
+    exceptionService.register(AccessExceptionFactory());
+  }
+
+  void _initAuthInterceptor() {
+    httpClient.interceptors.add(QueuedInterceptorsWrapper(
+      onRequest: (options, handler) {
+        if (authorized) {
+          options.headers['Authorization'] =
+              'Bearer $_token-${secretProvider(_token!)}';
+        }
+      },
+      onError: (error, handler) {
+        throw exceptionService.find(error);
+      },
+    ));
+  }
+
+  void _initBaseUrl() {
+    httpClient.options.baseUrl = 'https://$authority';
+  }
+
+  void _initTransformer() {
+    httpClient.transformer =
+        DefaultTransformer(jsonDecodeCallback: jsonProvider);
+  }
+
+  static JsonDecodeCallback defaultJsonProviderBuilder() {
+    return (text) => jsonDecode(text);
+  }
+
+  static SecretProviderCallback defaultSecretProviderBuilder() {
+    return (secret) =>
+        md5.convert(utf8.encode(secret)).toString().substring(0, 12);
   }
 
   void auth(String token) {

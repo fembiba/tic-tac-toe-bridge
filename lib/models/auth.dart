@@ -6,5 +6,18 @@ class Auth {
 
   final Identifiable<Player> player;
 
-  const Auth(this.token, {required this.player});
+  const Auth({required this.token, required this.player});
+
+  factory Auth.json(dynamic json) => Auth(
+        token: json['token'] as String,
+        player: Identifiable<Player>.json(json, (json) => Player.json(json)),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'token': token,
+        'player': player.toJson((information) => information.toJson()),
+      };
+
+  @override
+  String toString() => toJson().toString();
 }

@@ -16,4 +16,11 @@ class Identifier {
   String toString() {
     return _value;
   }
+
+  @override
+  bool operator ==(Object other) =>
+      other is Identifier && _value == other._value;
+
+  @override
+  int get hashCode => _value.hashCode;
 }

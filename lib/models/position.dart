@@ -12,6 +12,13 @@ class Position {
         vertical = all,
         assert(all >= 0);
 
+  factory Position.json(dynamic json) {
+    return Position.only(
+      horizontal: json['horizontal'] as int,
+      vertical: json['vertical'] as int,
+    );
+  }
+
   Position copyWith({
     int? horizontal,
     int? vertical,
@@ -21,4 +28,21 @@ class Position {
       horizontal: horizontal ?? this.horizontal,
     );
   }
+
+  Map<String, dynamic> toJson() => {
+        'horizontal': horizontal,
+        'vertical': vertical,
+      };
+
+  @override
+  bool operator ==(Object other) =>
+      other is Position &&
+      other.horizontal == horizontal &&
+      other.vertical == vertical;
+
+  @override
+  String toString() => toJson().toString();
+
+  @override
+  int get hashCode => Object.hash(horizontal, vertical);
 }

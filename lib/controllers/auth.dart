@@ -8,15 +8,32 @@ class AuthController extends Controller {
   const AuthController.of(super.context) : super.of();
 
   Future<Auth> signIn(String name, String password) async {
-    throw UnimplementedError();
+    var result = await context.httpClient.post('/sign/in', data: {
+      'name': name,
+      'password': password,
+      'secret': context.secretProvider(name),
+    });
+
+    var auth = Auth.json(result.data);
+
+    context.auth(auth.token);
+
+    return auth;
   }
 
   Future<Identifiable<Player>> signUp(String name, String password) async {
-    throw UnimplementedError();
+    var result = await context.httpClient.post('/sign/up', data: {
+      'name': name,
+      'password': password,
+    });
+
+    return Identifiable<Player>.json(result.data, (json) => Player.json(json));
   }
 
   @auth
-  Future<Identifiable<Player>> signOut() async {
-    throw UnimplementedError();
+  Future signOut() async {
+    await context.httpClient.post('/sign/out');
+
+    context.unauth();
   }
 }

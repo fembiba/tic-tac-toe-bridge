@@ -10,4 +10,19 @@ class Game {
     required this.state,
     required this.players,
   });
+
+  factory Game.json(dynamic json) => Game(
+        state: GameState.json(json['state']),
+        players: (json['players'] as List<dynamic>)
+            .map((e) => Identifier(e as String))
+            .toList(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'state': GameState.toJson(state),
+        'players': players.map((e) => e.toString()).toList(),
+      };
+
+  @override
+  String toString() => toJson().toString();
 }
