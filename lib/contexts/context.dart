@@ -1,23 +1,30 @@
 import 'package:dio/dio.dart';
-import 'package:tic_tac_toe_bridge/utils/secret.dart';
+
+typedef ContextSecretProvider = String Function(String token);
 
 class Context {
   final Dio _client;
 
   String? _token;
 
+  ContextSecretProvider _secret;
+
   Object get client => _client;
 
   bool get isAuth => _token != null;
 
-  Context() : _client = Dio() {
+  Context(JsonDecodeCallback decoder, ContextSecretProvider secret)
+      : _secret = secret,
+        _client = Dio() {
     _client.interceptors
       ..add(QueuedInterceptorsWrapper(onRequest: (options, handler) {
         if (isAuth) {
           options.headers["Authorization"] =
-              "Bearer $_token-${SecretUtils.generate(_token!)}";
+              "Bearer $_token-${_secret(_token!)}";
         }
       }));
+
+    _client.transformer = DefaultTransformer(jsonDecodeCallback: decoder);
   }
 
   void auth(String token) {
