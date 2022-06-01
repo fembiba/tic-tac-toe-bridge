@@ -1,4 +1,4 @@
-import 'package:tic_tac_toe_bridge/models/Identifier.dart';
+import 'package:tic_tac_toe_bridge/models/identifier.dart';
 
 class Identifiable<T> {
   final Identifier identifier;
