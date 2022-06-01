@@ -1,6 +1,5 @@
 import 'package:tic_tac_toe_bridge/models/game.dart';
 import 'package:tic_tac_toe_bridge/models/identifier.dart';
-import 'package:tic_tac_toe_bridge/models/board.dart';
 
 abstract class LobbyState {
   const LobbyState();

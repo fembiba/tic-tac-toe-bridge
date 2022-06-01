@@ -1,6 +1,5 @@
 import 'package:tic_tac_toe_bridge/annotations/auth.dart';
 import 'package:tic_tac_toe_bridge/controllers/base.dart';
-import 'package:tic_tac_toe_bridge/enums/game_mode.dart';
 import 'package:tic_tac_toe_bridge/models/lobby.dart';
 
 class LobbyController extends Controller {
