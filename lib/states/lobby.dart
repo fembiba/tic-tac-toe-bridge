@@ -77,7 +77,7 @@ class LobbyPlayingState extends LobbyState {
 }
 
 class LobbyFinishedState extends LobbyEndedState {
-  final List<Identifier> winners;
+  final Set<Identifier> winners;
 
   const LobbyFinishedState({
     required this.winners,
@@ -87,7 +87,7 @@ class LobbyFinishedState extends LobbyEndedState {
     return LobbyFinishedState(
       winners: (json['winners'] as List<dynamic>)
           .map((e) => Identifier(e as String))
-          .toList(),
+          .toSet(),
     );
   }
 
@@ -110,7 +110,7 @@ class LobbyFinishedState extends LobbyEndedState {
 }
 
 class LobbyCanceledState extends LobbyEndedState {
-  final List<Identifier> guilties;
+  final Set<Identifier> guilties;
 
   const LobbyCanceledState({
     required this.guilties,
@@ -120,7 +120,7 @@ class LobbyCanceledState extends LobbyEndedState {
     return LobbyCanceledState(
       guilties: (json['guilties'] as List<dynamic>)
           .map((e) => Identifier(e as String))
-          .toList(),
+          .toSet(),
     );
   }
 

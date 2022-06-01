@@ -4,7 +4,7 @@ import 'package:tic_tac_toe_bridge/states/game.dart';
 class Game {
   final GameState state;
 
-  final List<Identifier> players;
+  final Set<Identifier> players;
 
   const Game({
     required this.state,
@@ -15,7 +15,7 @@ class Game {
         state: GameState.json(json['state']),
         players: (json['players'] as List<dynamic>)
             .map((e) => Identifier(e as String))
-            .toList(),
+            .toSet(),
       );
 
   Map<String, dynamic> toJson() => {

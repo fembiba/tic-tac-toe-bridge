@@ -1,11 +1,9 @@
-import 'dart:collection';
-
 import 'package:dio/dio.dart';
 import 'package:tic_tac_toe_bridge/exceptions/exceptions.dart';
 import 'package:tic_tac_toe_bridge/factories/factories.dart';
 
 class ExceptionService {
-  final HashSet<ExceptionFactory> _factories = HashSet();
+  final Set<ExceptionFactory> _factories = {};
 
   final ExceptionFactory _factory;
 

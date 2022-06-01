@@ -48,7 +48,7 @@ class GamePreparingState extends GameState {
 class GamePlayingState extends GameState {
   final Board board;
 
-  final List<Identifier> walkers;
+  final Set<Identifier> walkers;
 
   final DateTime? next;
 
@@ -63,7 +63,7 @@ class GamePlayingState extends GameState {
       board: Board.json(json['board']),
       walkers: (json['walkers'] as List<dynamic>)
           .map((e) => Identifier(e as String))
-          .toList(),
+          .toSet(),
       next: json['next'] != null ? DateTime.parse(json['next']) : null,
     );
   }
@@ -90,7 +90,7 @@ class GamePlayingState extends GameState {
 }
 
 class GameFinishedState extends GameEndedState {
-  final List<Identifier> winners;
+  final Set<Identifier> winners;
 
   const GameFinishedState({
     required this.winners,
@@ -100,7 +100,7 @@ class GameFinishedState extends GameEndedState {
     return GameFinishedState(
       winners: (json['winners'] as List<dynamic>)
           .map((e) => Identifier(e as String))
-          .toList(),
+          .toSet(),
     );
   }
 
@@ -123,7 +123,7 @@ class GameFinishedState extends GameEndedState {
 }
 
 class GameCanceledState extends GameEndedState {
-  final List<Identifier> guilties;
+  final Set<Identifier> guilties;
 
   const GameCanceledState({
     required this.guilties,
@@ -133,7 +133,7 @@ class GameCanceledState extends GameEndedState {
     return GameCanceledState(
       guilties: (json['guilties'] as List<dynamic>)
           .map((e) => Identifier(e as String))
-          .toList(),
+          .toSet(),
     );
   }
 
