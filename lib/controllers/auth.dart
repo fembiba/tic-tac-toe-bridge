@@ -12,7 +12,7 @@ class AuthController extends Controller {
     var result = await context.httpClient.post<dynamic>('/sign/in', data: {
       'name': name,
       'password': password,
-      'secret': context.secretProvider(name),
+      'secret': context.secretProvider(),
     }).handle(context);
 
     var auth = Auth.json(result.data);
