@@ -19,6 +19,7 @@ class LobbyController extends Controller {
   Future<Lobby> search(String gameMode, {bool wait = true}) async {
     var result = await context.httpClient.post('/lobby/search', data: {
       'polling': wait,
+      'mode': gameMode,
     }).handle(context);
 
     return Lobby.json(result.data);
