@@ -44,15 +44,15 @@ class Context {
   }
 
   void _initAuthInterceptor() {
+    httpClient.interceptors.add(LogInterceptor(responseBody: true));
     httpClient.interceptors.add(QueuedInterceptorsWrapper(
       onRequest: (options, handler) {
         if (authorized) {
           options.headers['Authorization'] =
               'Bearer $_token-${secretProvider(_token!)}';
         }
-      },
-      onError: (error, handler) {
-        throw exceptionService.find(error);
+
+        handler.next(options);
       },
     ));
   }

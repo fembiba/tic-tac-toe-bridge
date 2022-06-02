@@ -15,12 +15,12 @@ class Identifiable<T> {
     T Function(dynamic json) information,
   ) =>
       Identifiable(
-        identifier: Identifier.parse(json['identifier'] as String),
+        identifier: Identifier.parse(json['id'] as String),
         information: information(json['information'] as Map<String, dynamic>),
       );
 
   toJson(dynamic Function(T information) information) => {
-        'identifier': identifier.toString(),
+        'id': identifier.toString(),
         'information': information(this.information),
       };
 
