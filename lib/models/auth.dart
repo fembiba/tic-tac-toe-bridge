@@ -10,7 +10,10 @@ class Auth {
 
   factory Auth.json(dynamic json) => Auth(
         token: json['token'] as String,
-        player: Identifiable<Player>.json(json, (json) => Player.json(json)),
+        player: Identifiable<Player>.json(
+          json['player'],
+          (json) => Player.json(json),
+        ),
       );
 
   Map<String, dynamic> toJson() => {
