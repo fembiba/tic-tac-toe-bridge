@@ -6,7 +6,7 @@ abstract class GameState {
 
   factory GameState.json(dynamic json) {
     var type = (json['type'] as String).toLowerCase();
-    var state = json['state'];
+    var state = json['information'];
 
     switch (type) {
       case 'prepare':

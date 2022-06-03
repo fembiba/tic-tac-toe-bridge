@@ -11,7 +11,7 @@ class Board {
         (json as List<dynamic>)
             .map(
               (e) => (e as List<dynamic>)
-                  .map((e) => Identifier(e as String))
+                  .map((e) => e != null ? Identifier(e as String) : null)
                   .toList(),
             )
             .toList(),

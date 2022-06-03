@@ -4,7 +4,7 @@ import 'package:crypto/crypto.dart';
 import 'package:dio/dio.dart';
 import 'package:tic_tac_toe_bridge/tic_tac_toe_bridge.dart';
 
-typedef SecretProviderCallback = String Function(String token);
+typedef SecretProviderCallback = String Function();
 
 class Context {
   String? _token;
@@ -44,15 +44,17 @@ class Context {
   }
 
   void _initAuthInterceptor() {
+    httpClient.interceptors.add(LogInterceptor(responseBody: true));
     httpClient.interceptors.add(QueuedInterceptorsWrapper(
       onRequest: (options, handler) {
         if (authorized) {
           options.headers['Authorization'] =
-              'Bearer $_token-${secretProvider(_token!)}';
+              'Bearer $_token-${secretProvider()}';
         }
-      },
-      onError: (error, handler) {
-        throw exceptionService.find(error);
+
+        print(options.headers);
+
+        handler.next(options);
       },
     ));
   }
@@ -71,8 +73,7 @@ class Context {
   }
 
   static SecretProviderCallback defaultSecretProviderBuilder() {
-    return (secret) =>
-        md5.convert(utf8.encode(secret)).toString().substring(0, 12);
+    return () => md5.convert(utf8.encode("empty")).toString().substring(0, 12);
   }
 
   void auth(String token) {

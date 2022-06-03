@@ -9,3 +9,4 @@ export 'services/services.dart';
 export 'factories/factories.dart';
 export 'exceptions/exceptions.dart';
 export 'annotations/annotations.dart';
+export 'extensions/extensions.dart';

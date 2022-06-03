@@ -1,5 +1,6 @@
 import 'package:tic_tac_toe_bridge/annotations/auth.dart';
 import 'package:tic_tac_toe_bridge/controllers/base.dart';
+import 'package:tic_tac_toe_bridge/extensions/handle_response.dart';
 import 'package:tic_tac_toe_bridge/models/game.dart';
 import 'package:tic_tac_toe_bridge/models/position.dart';
 
@@ -10,7 +11,7 @@ class GameController extends Controller {
   Future<Game> read({bool wait = false}) async {
     var result = await context.httpClient.get('/game', queryParameters: {
       'polling': wait,
-    });
+    }).handle(context);
 
     return Game.json(result.data);
   }
@@ -22,7 +23,7 @@ class GameController extends Controller {
         'horizontal': position.horizontal,
         'vertical': position.vertical,
       },
-    });
+    }).handle(context);
 
     return Game.json(result.data);
   }

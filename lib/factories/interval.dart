@@ -7,7 +7,9 @@ class IntervalExceptionFactory extends ExceptionFactory {
   const IntervalExceptionFactory();
 
   @override
-  bool match(DioError error) => error.response?.data['type'] == 'Interval';
+  bool match(DioError error) =>
+      error.response?.data['type'] is String &&
+      error.response?.data['type'] == 'Interval';
 
   @override
   TicTacToeException transform(DioError error) {
