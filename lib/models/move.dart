@@ -22,4 +22,15 @@ class Move {
         'isMoved': moved,
         'game': game.toJson(),
       };
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Move &&
+          runtimeType == other.runtimeType &&
+          moved == other.moved &&
+          game == other.game;
+
+  @override
+  int get hashCode => moved.hashCode ^ game.hashCode;
 }

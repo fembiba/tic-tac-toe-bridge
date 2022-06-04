@@ -23,4 +23,15 @@ class Auth {
 
   @override
   String toString() => toJson().toString();
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      runtimeType == other.runtimeType &&
+          other is Auth &&
+          token == other.token &&
+          player == other.player;
+
+  @override
+  int get hashCode => token.hashCode ^ player.hashCode;
 }

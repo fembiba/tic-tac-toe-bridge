@@ -22,4 +22,14 @@ class Board {
 
   @override
   String toString() => toJson().toString();
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Board &&
+          runtimeType == other.runtimeType &&
+          cells == other.cells;
+
+  @override
+  int get hashCode => cells.hashCode;
 }

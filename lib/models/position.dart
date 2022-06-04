@@ -40,9 +40,67 @@ class Position {
       other.horizontal == horizontal &&
       other.vertical == vertical;
 
+  Position operator +(Position other) {
+    return Position.only(
+      horizontal: horizontal + other.horizontal,
+      vertical: vertical + other.vertical,
+    );
+  }
+
+  Position operator -(Position other) {
+    return Position.only(
+      horizontal: horizontal - other.horizontal,
+      vertical: vertical - other.vertical,
+    );
+  }
+
+  Position operator *(int scalar) {
+    return Position.only(
+      horizontal: horizontal * scalar,
+      vertical: vertical * scalar,
+    );
+  }
+
+  Position operator /(int scalar) {
+    return Position.only(
+      horizontal: horizontal ~/ scalar,
+      vertical: vertical ~/ scalar,
+    );
+  }
+
+  Position operator %(int scalar) {
+    return Position.only(
+      horizontal: horizontal % scalar,
+      vertical: vertical % scalar,
+    );
+  }
+
+  Position operator &(Position other) {
+    return Position.only(
+      horizontal: horizontal & other.horizontal,
+      vertical: vertical & other.vertical,
+    );
+  }
+
+  Position operator |(Position other) {
+    return Position.only(
+      horizontal: horizontal | other.horizontal,
+      vertical: vertical | other.vertical,
+    );
+  }
+
+  Position operator -() {
+    return Position.only(
+      horizontal: -horizontal,
+      vertical: -vertical,
+    );
+  }
+
   @override
   String toString() => toJson().toString();
 
   @override
   int get hashCode => Object.hash(horizontal, vertical);
+
+  static const empty = Position.all(0);
 }
