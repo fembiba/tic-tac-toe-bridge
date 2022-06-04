@@ -32,7 +32,7 @@ class AuthController extends Controller {
   }
 
   @auth
-  Future signOut() async {
+  Future<void> signOut() async {
     await context.httpClient.post('/sign/out').handle(context);
 
     context.unauth();
