@@ -24,4 +24,15 @@ class Lobby {
         'state': LobbyState.json(state),
         'players': players.map((e) => e.toString()).toList(),
       };
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Lobby &&
+          runtimeType == other.runtimeType &&
+          state == other.state &&
+          players == other.players;
+
+  @override
+  int get hashCode => state.hashCode ^ players.hashCode;
 }

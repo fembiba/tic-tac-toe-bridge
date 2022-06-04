@@ -27,4 +27,15 @@ class Identifiable<T> {
   @override
   String toString() =>
       toJson((information) => information.toString()).toString();
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Identifiable &&
+          runtimeType == other.runtimeType &&
+          identifier == other.identifier &&
+          information == other.information;
+
+  @override
+  int get hashCode => identifier.hashCode ^ information.hashCode;
 }
