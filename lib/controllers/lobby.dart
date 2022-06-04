@@ -26,7 +26,7 @@ class LobbyController extends Controller {
   }
 
   @auth
-  Future leave() async {
+  Future<void> leave() async {
     await context.httpClient.get('/lobby/leave').handle(context);
   }
 }
