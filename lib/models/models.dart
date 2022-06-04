@@ -7,3 +7,4 @@ export 'auth.dart';
 export 'game.dart';
 export 'board.dart';
 export 'lobby.dart';
+export 'move.dart';
