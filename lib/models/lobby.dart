@@ -21,7 +21,7 @@ class Lobby {
   String toString() => toJson().toString();
 
   Map<String, dynamic> toJson() => {
-        'state': LobbyState.json(state),
+        'state': (state as dynamic).toJson(),
         'players': players.map((e) => e.toString()).toList(),
       };
 
