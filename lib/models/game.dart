@@ -25,4 +25,15 @@ class Game {
 
   @override
   String toString() => toJson().toString();
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Game &&
+          runtimeType == other.runtimeType &&
+          state == other.state &&
+          players == other.players;
+
+  @override
+  int get hashCode => state.hashCode ^ players.hashCode;
 }

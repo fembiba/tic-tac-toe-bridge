@@ -10,13 +10,13 @@ abstract class LobbyState {
 
     switch (type) {
       case 'prepare':
-        return LobbyPreparingState.json(state);
+        return LobbyPreparingState.json(json);
       case 'playing':
-        return LobbyPlayingState.json(state);
+        return LobbyPlayingState.json(json);
       case 'finished':
-        return LobbyFinishedState.json(state);
+        return LobbyFinishedState.json(json);
       case 'canceled':
-        return LobbyCanceledState.json(state);
+        return LobbyCanceledState.json(json);
       default:
         throw FormatException(type);
     }
@@ -54,7 +54,9 @@ class LobbyPlayingState extends LobbyState {
 
   factory LobbyPlayingState.json(dynamic json) {
     return LobbyPlayingState(
-      games: (json['games'] as List<dynamic>).map((e) => Game.json(e)).toList(),
+      games: (json['information']['games'] as List<dynamic>)
+          .map((e) => Game.json(e))
+          .toList(),
     );
   }
 
@@ -85,7 +87,7 @@ class LobbyFinishedState extends LobbyEndedState {
 
   factory LobbyFinishedState.json(dynamic json) {
     return LobbyFinishedState(
-      winners: (json['winners'] as List<dynamic>)
+      winners: (json['information']['winners'] as List<dynamic>)
           .map((e) => Identifier(e as String))
           .toSet(),
     );
@@ -118,7 +120,7 @@ class LobbyCanceledState extends LobbyEndedState {
 
   factory LobbyCanceledState.json(dynamic json) {
     return LobbyCanceledState(
-      guilties: (json['guilties'] as List<dynamic>)
+      guilties: (json['information']['guilties'] as List<dynamic>)
           .map((e) => Identifier(e as String))
           .toSet(),
     );

@@ -2,6 +2,7 @@ import 'package:tic_tac_toe_bridge/annotations/auth.dart';
 import 'package:tic_tac_toe_bridge/controllers/base.dart';
 import 'package:tic_tac_toe_bridge/extensions/handle_response.dart';
 import 'package:tic_tac_toe_bridge/models/game.dart';
+import 'package:tic_tac_toe_bridge/models/move.dart';
 import 'package:tic_tac_toe_bridge/models/position.dart';
 
 class GameController extends Controller {
@@ -17,14 +18,11 @@ class GameController extends Controller {
   }
 
   @auth
-  Future<Game> move(Position position) async {
+  Future<Move> move(Position position) async {
     var result = await context.httpClient.post('/game/move', data: {
-      'position': {
-        'horizontal': position.horizontal,
-        'vertical': position.vertical,
-      },
+      'position': position.toJson(),
     }).handle(context);
 
-    return Game.json(result.data);
+    return Move.json(result.data);
   }
 }

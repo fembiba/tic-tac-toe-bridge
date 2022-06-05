@@ -1,6 +1,6 @@
 name: tic_tac_toe_bridge
 description: The bridge to work with the server for Tic Tac Toe with which you can create your own client or bot for the game.
-version: 0.2.0+3
+version: 1.0.0+5
 homepage:
 
 environment:

@@ -9,9 +9,9 @@ class ExceptionService {
 
   ExceptionService(ExceptionFactory factory) : _factory = factory;
 
-  void register(ExceptionFactory factory) => _factories.add(factory);
+  bool register(ExceptionFactory factory) => _factories.add(factory);
 
-  void unregister(ExceptionFactory factory) => _factories.remove(factory);
+  bool unregister(ExceptionFactory factory) => _factories.remove(factory);
 
   TicTacToeException find(DioError error) {
     return _factories

@@ -41,6 +41,7 @@ class Context {
     exceptionService.register(IntervalExceptionFactory());
     exceptionService.register(ValidationExceptionFactory());
     exceptionService.register(AccessExceptionFactory());
+    exceptionService.register(DefaultExceptionFactory());
   }
 
   void _initAuthInterceptor() {

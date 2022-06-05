@@ -21,7 +21,18 @@ class Lobby {
   String toString() => toJson().toString();
 
   Map<String, dynamic> toJson() => {
-        'state': LobbyState.json(state),
+        'state': (state as dynamic).toJson(),
         'players': players.map((e) => e.toString()).toList(),
       };
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Lobby &&
+          runtimeType == other.runtimeType &&
+          state == other.state &&
+          players == other.players;
+
+  @override
+  int get hashCode => state.hashCode ^ players.hashCode;
 }
