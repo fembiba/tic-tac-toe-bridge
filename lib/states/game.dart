@@ -71,7 +71,7 @@ class GamePlayingState extends GameState {
   Map<String, dynamic> toJson() => {
         'type': 'playing',
         'state': {
-          'winners': walkers.map((e) => e.toString()).toList(),
+          'walkers': walkers.map((e) => e.toString()).toList(),
         },
         'next': next?.toIso8601String(),
       };
