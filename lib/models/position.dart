@@ -29,7 +29,7 @@ class Position {
     );
   }
 
-  Map<String, dynamic> toJson() => {
+  dynamic toJson() => {
         'horizontal': horizontal,
         'vertical': vertical,
       };

@@ -40,7 +40,7 @@ class GamePreparingState extends GameState {
     return GamePreparingState();
   }
 
-  Map<String, dynamic> toJson() => {
+  dynamic toJson() => {
         'type': 'prepare',
       };
 }
@@ -68,7 +68,7 @@ class GamePlayingState extends GameState {
     );
   }
 
-  Map<String, dynamic> toJson() => {
+  dynamic toJson() => {
         'type': 'playing',
         'state': {
           'walkers': walkers.map((e) => e.toString()).toList(),
@@ -104,7 +104,7 @@ class GameFinishedState extends GameEndedState {
     );
   }
 
-  Map<String, dynamic> toJson() => {
+  dynamic toJson() => {
         'type': 'finished',
         'state': {
           'winners': winners.map((e) => e.toString()).toList(),
@@ -137,7 +137,7 @@ class GameCanceledState extends GameEndedState {
     );
   }
 
-  Map<String, dynamic> toJson() => {
+  dynamic toJson() => {
         'type': 'canceled',
         'state': {
           'guilties': guilties.map((e) => e.toString()).toList(),

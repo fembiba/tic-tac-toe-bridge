@@ -20,7 +20,7 @@ class Lobby {
   @override
   String toString() => toJson().toString();
 
-  Map<String, dynamic> toJson() => {
+  dynamic toJson() => {
         'state': (state as dynamic).toJson(),
         'players': players.map((e) => e.toString()).toList(),
       };

@@ -40,7 +40,7 @@ class LobbyPreparingState extends LobbyState {
     return LobbyPreparingState();
   }
 
-  Map<String, dynamic> toJson() => {
+  dynamic toJson() => {
         'type': 'prepare',
       };
 }
@@ -60,7 +60,7 @@ class LobbyPlayingState extends LobbyState {
     );
   }
 
-  Map<String, dynamic> toJson() => {
+  dynamic toJson() => {
         'type': 'playing',
         'state': {
           'games': games.map((e) => e.toString()).toList(),
@@ -93,7 +93,7 @@ class LobbyFinishedState extends LobbyEndedState {
     );
   }
 
-  Map<String, dynamic> toJson() => {
+  dynamic toJson() => {
         'type': 'finished',
         'state': {
           'winners': winners.map((e) => e.toString()).toList(),
@@ -126,7 +126,7 @@ class LobbyCanceledState extends LobbyEndedState {
     );
   }
 
-  Map<String, dynamic> toJson() => {
+  dynamic toJson() => {
         'type': 'canceled',
         'state': {
           'guilties': guilties.map((e) => e.toString()).toList(),
