@@ -7,6 +7,10 @@ class Waiter {
     return Waiter(value);
   }
 
+  factory Waiter.any() {
+    return Waiter('any');
+  }
+
   @override
   String toString() => _value.toString();
 
