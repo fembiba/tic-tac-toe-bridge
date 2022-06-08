@@ -8,5 +8,5 @@ export 'game.dart';
 export 'board.dart';
 export 'lobby.dart';
 export 'move.dart';
-export 'polling.dart';
+export 'waitable.dart';
 export 'waiter.dart';

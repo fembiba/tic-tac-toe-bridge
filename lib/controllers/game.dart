@@ -3,7 +3,7 @@ import 'package:tic_tac_toe_bridge/controllers/base.dart';
 import 'package:tic_tac_toe_bridge/extensions/handle_response.dart';
 import 'package:tic_tac_toe_bridge/models/game.dart';
 import 'package:tic_tac_toe_bridge/models/move.dart';
-import 'package:tic_tac_toe_bridge/models/polling.dart';
+import 'package:tic_tac_toe_bridge/models/waitable.dart';
 import 'package:tic_tac_toe_bridge/models/position.dart';
 import 'package:tic_tac_toe_bridge/models/waiter.dart';
 
@@ -16,7 +16,7 @@ class GameController extends Controller {
       'polling': waiter?.toString(),
     }).handle(context);
 
-    return Waitable.json(result.data, (json) => Game.json(result.data));
+    return Waitable.json(result.data, (json) => Game.json(json));
   }
 
   @auth

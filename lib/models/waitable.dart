@@ -14,8 +14,8 @@ class Waitable<T> {
     T Function(dynamic json) information,
   ) =>
       Waitable(
-        waiter: Waiter.parse(json['polling'] as String),
-        information: information(json['information'] as Map<String, dynamic>),
+        waiter: Waiter.parse(json['polling'] as String?),
+        information: information(json['information'] as dynamic),
       );
 
   dynamic toJson(dynamic Function(T information) information) => {

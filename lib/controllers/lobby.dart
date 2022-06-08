@@ -2,7 +2,7 @@ import 'package:tic_tac_toe_bridge/annotations/auth.dart';
 import 'package:tic_tac_toe_bridge/controllers/base.dart';
 import 'package:tic_tac_toe_bridge/extensions/handle_response.dart';
 import 'package:tic_tac_toe_bridge/models/lobby.dart';
-import 'package:tic_tac_toe_bridge/models/polling.dart';
+import 'package:tic_tac_toe_bridge/models/waitable.dart';
 import 'package:tic_tac_toe_bridge/models/waiter.dart';
 
 class LobbyController extends Controller {
@@ -14,7 +14,7 @@ class LobbyController extends Controller {
       'polling': waiter?.toString(),
     }).handle(context);
 
-    return Waitable.json(result.data, (json) => Lobby.json(result.data));
+    return Waitable.json(result.data, (json) => Lobby.json(json));
   }
 
   @auth
@@ -24,7 +24,7 @@ class LobbyController extends Controller {
       'mode': gameMode,
     }).handle(context);
 
-    return Waitable.json(result.data, (json) => Lobby.json(result.data));
+    return Waitable.json(result.data, (json) => Lobby.json(json));
   }
 
   @auth
