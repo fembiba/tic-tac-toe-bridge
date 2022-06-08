@@ -2,27 +2,29 @@ import 'package:tic_tac_toe_bridge/annotations/auth.dart';
 import 'package:tic_tac_toe_bridge/controllers/base.dart';
 import 'package:tic_tac_toe_bridge/extensions/handle_response.dart';
 import 'package:tic_tac_toe_bridge/models/lobby.dart';
+import 'package:tic_tac_toe_bridge/models/polling.dart';
+import 'package:tic_tac_toe_bridge/models/waiter.dart';
 
 class LobbyController extends Controller {
   const LobbyController.of(super.context) : super.of();
 
   @auth
-  Future<Lobby> read({bool wait = false}) async {
+  Future<Waitable<Lobby>> read([Waiter? waiter]) async {
     var result = await context.httpClient.get('/lobby', queryParameters: {
-      'polling': wait,
+      'polling': waiter?.toString(),
     }).handle(context);
 
-    return Lobby.json(result.data);
+    return Waitable.json(result.data, (json) => Lobby.json(result.data));
   }
 
   @auth
-  Future<Lobby> search(String gameMode, {bool wait = true}) async {
+  Future<Waitable<Lobby>> search(String gameMode, [Waiter? waiter]) async {
     var result = await context.httpClient.post('/lobby/search', data: {
-      'polling': wait,
+      'polling': waiter?.toString(),
       'mode': gameMode,
     }).handle(context);
 
-    return Lobby.json(result.data);
+    return Waitable.json(result.data, (json) => Lobby.json(result.data));
   }
 
   @auth

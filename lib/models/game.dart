@@ -18,7 +18,7 @@ class Game {
             .toSet(),
       );
 
-  Map<String, dynamic> toJson() => {
+  dynamic toJson() => {
         'state': GameState.toJson(state),
         'players': players.map((e) => e.toString()).toList(),
       };

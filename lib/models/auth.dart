@@ -16,7 +16,7 @@ class Auth {
         ),
       );
 
-  Map<String, dynamic> toJson() => {
+  dynamic toJson() => {
         'token': token,
         'player': player.toJson((information) => information.toJson()),
       };

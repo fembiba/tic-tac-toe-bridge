@@ -6,7 +6,7 @@ class Identifier {
 
   const Identifier(String value) : _value = value;
 
-  static Identifier parse(String value) {
+  factory Identifier.parse(String value) {
     assert(_validate.hasMatch(value));
 
     return Identifier(value);

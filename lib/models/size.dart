@@ -29,7 +29,7 @@ class Size {
     );
   }
 
-  Map<String, dynamic> toJson() => {
+  dynamic toJson() => {
         'width': width,
         'height': height,
       };
