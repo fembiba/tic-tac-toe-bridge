@@ -1,26 +1,25 @@
-import 'package:tic_tac_toe_bridge/models/identifier.dart';
+import 'package:tic_tac_toe_bridge/models/waiter.dart';
 
-class Identifiable<T> {
-  final Identifier identifier;
-
+class Waitable<T> {
+  final Waiter waiter;
   final T information;
 
-  const Identifiable({
-    required this.identifier,
+  const Waitable({
+    required this.waiter,
     required this.information,
   });
 
-  factory Identifiable.json(
+  factory Waitable.json(
     dynamic json,
     T Function(dynamic json) information,
   ) =>
-      Identifiable(
-        identifier: Identifier.parse(json['id'] as String),
+      Waitable(
+        waiter: Waiter.parse(json['polling'] as String),
         information: information(json['information'] as Map<String, dynamic>),
       );
 
   dynamic toJson(dynamic Function(T information) information) => {
-        'id': identifier.toString(),
+        'polling': waiter.toString(),
         'information': information(this.information),
       };
 
@@ -31,11 +30,11 @@ class Identifiable<T> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is Identifiable &&
+      other is Waitable &&
           runtimeType == other.runtimeType &&
-          identifier == other.identifier &&
+          waiter == other.waiter &&
           information == other.information;
 
   @override
-  int get hashCode => identifier.hashCode ^ information.hashCode;
+  int get hashCode => waiter.hashCode ^ information.hashCode;
 }
