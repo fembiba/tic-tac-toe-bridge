@@ -3,18 +3,20 @@ import 'package:tic_tac_toe_bridge/controllers/base.dart';
 import 'package:tic_tac_toe_bridge/extensions/handle_response.dart';
 import 'package:tic_tac_toe_bridge/models/game.dart';
 import 'package:tic_tac_toe_bridge/models/move.dart';
+import 'package:tic_tac_toe_bridge/models/waitable.dart';
 import 'package:tic_tac_toe_bridge/models/position.dart';
+import 'package:tic_tac_toe_bridge/models/waiter.dart';
 
 class GameController extends Controller {
   const GameController.of(super.context) : super.of();
 
   @auth
-  Future<Game> read({bool wait = false}) async {
+  Future<Waitable<Game>> read([Waiter? waiter]) async {
     var result = await context.httpClient.get('/game', queryParameters: {
-      'polling': wait,
+      'polling': waiter?.toString(),
     }).handle(context);
 
-    return Game.json(result.data);
+    return Waitable.json(result.data, (json) => Game.json(json));
   }
 
   @auth

@@ -18,7 +18,7 @@ class Move {
   @override
   String toString() => toJson().toString();
 
-  Map<String, dynamic> toJson() => {
+  dynamic toJson() => {
         'isMoved': moved,
         'game': game.toJson(),
       };

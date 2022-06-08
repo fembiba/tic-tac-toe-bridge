@@ -19,7 +19,7 @@ class Player {
     );
   }
 
-  Map<String, dynamic> toJson() => {
+  dynamic toJson() => {
         'name': name,
         'level': level,
         'experience': experience,
